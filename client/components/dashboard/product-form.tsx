@@ -14,7 +14,7 @@ import { toast } from "@/components/ui/toast";
 import { cn } from "@/lib/cn";
 import { photoCredits } from "@/lib/data/photo-credits";
 import { availabilityLabels, categories, regions, statusLabels, units } from "@/lib/data/taxonomy";
-import { useSession, useStore } from "@/lib/hooks";
+import { useDocumentTitle, useSession, useStore } from "@/lib/hooks";
 import { errorMessage } from "@/lib/services/errors";
 import { canManageProduct, createProduct, getProductById, getSellerById, updateProduct } from "@/lib/services/products";
 import type { Availability, CategorySlug, ListingStatus, Product, ProductInput, RegionSlug, Unit } from "@/lib/types";
@@ -241,6 +241,7 @@ export function EditProductEditor({ id }: { id: string }) {
   const { db, ready } = useStore();
   const { user } = useSession();
   const product = getProductById(db, id);
+  useDocumentTitle(ready && product ? `რედაქტირება: ${product.title} · პანელი · Agromo` : null);
 
   return (
     <FarmerOnly>

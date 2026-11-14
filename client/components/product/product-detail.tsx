@@ -14,7 +14,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { getContactState } from "@/lib/contact";
 import { getCategory, getRegion, units } from "@/lib/data/taxonomy";
 import { formatDate, formatPrice, formatQuantity, unitShort } from "@/lib/format";
-import { useSellersById, useSession, useStore } from "@/lib/hooks";
+import { useDocumentTitle, useSellersById, useSession, useStore } from "@/lib/hooks";
 import { canManageProduct, getProductById, getProducts } from "@/lib/services/products";
 
 export function ProductDetail({ id }: { id: string }) {
@@ -35,10 +35,13 @@ export function ProductDetail({ id }: { id: string }) {
     return [...sameCategory, ...sameSeller].slice(0, 4);
   }, [db, id]);
 
+  const unavailable = !product || !seller || (product.status === "hidden" && !isOwner);
+  useDocumentTitle(!ready ? null : unavailable ? "განცხადება ვერ მოიძებნა · Agromo" : `${product.title} · Agromo`);
+
   // Listings created in this browser aren't known to the server render.
   if (!product && !ready) return <ProductDetailSkeleton />;
 
-  if (!product || !seller || (product.status === "hidden" && !isOwner)) {
+  if (!product || !seller || unavailable) {
     return (
       <div className="container-page py-16">
         <EmptyState

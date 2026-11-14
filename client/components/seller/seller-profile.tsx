@@ -10,7 +10,7 @@ import { ContactActions } from "@/components/seller/contact-actions";
 import { SellerAvatar } from "@/components/seller/seller-avatar";
 import { EmptyState } from "@/components/ui/empty-state";
 import { getCategory, getRegion } from "@/lib/data/taxonomy";
-import { useSession, useStore } from "@/lib/hooks";
+import { useDocumentTitle, useSession, useStore } from "@/lib/hooks";
 import { getProductsBySeller, getSellerById } from "@/lib/services/products";
 
 export function SellerProfile({ id }: { id: string }) {
@@ -22,6 +22,8 @@ export function SellerProfile({ id }: { id: string }) {
     () => [...new Set(products.map((p) => p.category))].map((c) => getCategory(c)?.name).filter(Boolean) as string[],
     [products],
   );
+
+  useDocumentTitle(!ready ? null : seller ? `${seller.name} · Agromo` : "ფერმერი ვერ მოიძებნა · Agromo");
 
   if (!seller && !ready) {
     return (

@@ -1,6 +1,9 @@
 import { Sprout } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { EmptyState } from "@/components/ui/empty-state";
+
+export const metadata: Metadata = { title: "გვერდი ვერ მოიძებნა" };
 
 export default function NotFound() {
   return (
