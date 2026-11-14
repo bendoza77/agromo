@@ -1,0 +1,367 @@
+@import "tailwindcss";
+
+/*
+ * Agromo design tokens.
+ * Colors are restrained: cream surfaces, ink text, forest green for primary
+ * actions and brand moments only, harvest amber as a rare accent.
+ */
+@theme {
+  --color-forest-950: #13281c;
+  --color-forest-900: #1b3627;
+  --color-forest-800: #244a35;
+  --color-forest-700: #2e5e41;
+  --color-forest-600: #39734a;
+  --color-leaf-500: #6f9a57;
+  --color-leaf-400: #83a96b;
+  --color-leaf-200: #cfe0c2;
+  --color-leaf-100: #e7efdf;
+  --color-leaf-50: #f2f6ec;
+
+  --color-cream-50: #fcfbf7;
+  --color-cream-100: #f7f5ee;
+  --color-cream-200: #efebdf;
+  --color-cream-300: #e4dece;
+
+  --color-ink-900: #202b24;
+  --color-ink-700: #3a463e;
+  --color-ink-600: #535f57;
+  --color-ink-500: #5f6a62;
+  --color-ink-400: #87918a;
+
+  --color-line: #e3e7df;
+  --color-line-strong: #cdd5c7;
+
+  --color-harvest-700: #7f5a17;
+  --color-harvest-500: #d5a34a;
+  --color-harvest-200: #f0dcb0;
+  --color-harvest-100: #f8eed8;
+
+  --color-danger-700: #9b2f2b;
+  --color-danger-600: #b83a35;
+  --color-danger-50: #fbeceb;
+  --color-success-700: #26623f;
+  --color-success-600: #2f7950;
+  --color-success-50: #e8f3ec;
+
+  --font-sans: var(--font-noto-sans-georgian), "Noto Sans Georgian", "BPG Arial", "Sylfaen", system-ui, sans-serif;
+  --font-display: var(--font-noto-serif-georgian), "Noto Serif Georgian", "Sylfaen", Georgia, serif;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  --shadow-card: 0 1px 2px rgb(32 43 36 / 0.05), 0 2px 8px -2px rgb(32 43 36 / 0.06);
+  --shadow-raised: 0 2px 4px rgb(32 43 36 / 0.06), 0 12px 32px -8px rgb(32 43 36 / 0.18);
+  --shadow-focus: 0 0 0 3px rgb(57 115 74 / 0.35);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --breakpoint-xs: 26rem;
+}
+
+:root {
+  color-scheme: light;
+  --header-h: 4rem;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 1rem);
+}
+
+body {
+  background: var(--color-cream-100);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans);
+  font-feature-settings: "kern";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Georgian words are long; let them wrap instead of overflowing. */
+h1,
+h2,
+h3,
+h4,
+p,
+li,
+dd,
+dt,
+label,
+a,
+button {
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-forest-600);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+::selection {
+  background: var(--color-leaf-200);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Component primitives ---------- */
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) {
+    .container-page {
+      padding-inline: 1.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Eyebrow labels use Georgian Mtavruli capitals, a native typographic convention. */
+  .eyebrow {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-forest-700);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.625rem 1.125rem;
+    border-radius: var(--radius-md);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    transition:
+      background-color 150ms var(--ease-out-soft),
+      border-color 150ms var(--ease-out-soft),
+      color 150ms var(--ease-out-soft),
+      box-shadow 150ms var(--ease-out-soft),
+      transform 150ms var(--ease-out-soft);
+    cursor: pointer;
+    user-select: none;
+  }
+  .btn:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+  .btn-sm {
+    min-height: 2.25rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.875rem;
+    border-radius: var(--radius-sm);
+  }
+  .btn-primary {
+    background: var(--color-forest-700);
+    color: #fff;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--color-forest-800);
+  }
+  .btn-secondary {
+    background: #fff;
+    color: var(--color-ink-900);
+    border-color: var(--color-line-strong);
+  }
+  .btn-secondary:hover:not(:disabled) {
+    border-color: var(--color-ink-400);
+    background: var(--color-cream-50);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-ink-700);
+  }
+  .btn-ghost:hover:not(:disabled) {
+    background: var(--color-cream-200);
+    color: var(--color-ink-900);
+  }
+  .btn-danger {
+    background: var(--color-danger-600);
+    color: #fff;
+  }
+  .btn-danger:hover:not(:disabled) {
+    background: var(--color-danger-700);
+  }
+  .btn-whatsapp {
+    background: #1f7a4c;
+    color: #fff;
+  }
+  .btn-whatsapp:hover:not(:disabled) {
+    background: #18613c;
+  }
+
+  .link {
+    color: var(--color-forest-700);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--color-leaf-200);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
+    transition: text-decoration-color 150ms;
+  }
+  .link:hover {
+    text-decoration-color: currentColor;
+  }
+
+  .input {
+    display: block;
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-line-strong);
+    background: #fff;
+    color: var(--color-ink-900);
+    font-size: 1rem;
+    line-height: 1.4;
+    transition:
+      border-color 150ms,
+      box-shadow 150ms;
+  }
+  .input::placeholder {
+    color: var(--color-ink-400);
+  }
+  .input:hover {
+    border-color: var(--color-ink-400);
+  }
+  .input:focus {
+    outline: none;
+    border-color: var(--color-forest-600);
+    box-shadow: var(--shadow-focus);
+  }
+  .input[aria-invalid="true"] {
+    border-color: var(--color-danger-600);
+  }
+  .input[aria-invalid="true"]:focus {
+    box-shadow: 0 0 0 3px rgb(184 58 53 / 0.2);
+  }
+  select.input {
+    appearance: none;
+    padding-right: 2.25rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%235f6a62' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+  }
+  textarea.input {
+    min-height: 8rem;
+    resize: vertical;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, var(--color-cream-200) 0%, var(--color-cream-100) 50%, var(--color-cream-200) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Produce-tag motif: the paper labels used at Georgian bazaars. */
+  .produce-tag {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.75rem 0.4rem 1.35rem;
+    background: var(--color-cream-50);
+    color: var(--color-ink-900);
+    border-radius: 3px 8px 8px 3px;
+    box-shadow: var(--shadow-raised);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  .produce-tag::before {
+    content: "";
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    width: 0.4rem;
+    height: 0.4rem;
+    margin-top: -0.2rem;
+    border-radius: 999px;
+    background: var(--color-cream-300);
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 0.2);
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+dialog::backdrop {
+  background: rgb(19 40 28 / 0.45);
+  animation: fade-in 150ms ease-out;
+}
