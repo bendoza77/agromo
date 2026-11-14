@@ -17,7 +17,7 @@ export function SellerCard({ seller, productCount, highlights }: { seller: Selle
         )}
       </div>
       <div className="flex flex-1 flex-col px-5 pb-5">
-        <SellerAvatar id={seller.id} name={seller.ownerName} size="lg" className="-mt-7 ring-4 ring-white" />
+        <SellerAvatar id={seller.id} name={seller.ownerName} size="lg" className="pointer-events-none relative z-10 -mt-7 ring-4 ring-white" />
         <h3 className="mt-3 font-display text-lg font-semibold leading-snug text-ink-900">
           <Link href={`/farmers/${seller.id}`} className="after:absolute after:inset-0 after:content-[''] group-hover:text-forest-800">
             {seller.name}

@@ -70,7 +70,7 @@ export function SellerProfile({ id }: { id: string }) {
       <div className="container-page pb-16">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem]">
           <div className="min-w-0">
-            <SellerAvatar id={seller.id} name={seller.ownerName} size="xl" className="-mt-12 ring-4 ring-cream-100" />
+            <SellerAvatar id={seller.id} name={seller.ownerName} size="xl" className="relative z-10 -mt-12 ring-4 ring-cream-100" />
             <Breadcrumbs
               items={[{ href: "/", label: "მთავარი" }, { href: "/farmers", label: "ფერმერები" }, { label: seller.name }]}
               className="mt-5"
